@@ -20,6 +20,6 @@ $ ->
     else
       $(".inputUrl p input[type='submit']").css { "background-color": "#fb8a78" }
 
-  $('#bookmarkGrid').masonry
-    columnWidth: 300
-    itemSelector: '#bookmarkGrid>div'
+  # $('#bookmarkGrid').masonry
+  #   columnWidth: 300
+  #   itemSelector: '#bookmarkGrid>div'
