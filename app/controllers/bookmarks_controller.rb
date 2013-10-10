@@ -1,74 +1,77 @@
+require 'open-uri'
+
 class BookmarksController < ApplicationController
-  before_action :set_bookmark, only: [:show, :edit, :update, :destroy]
 
-  # GET /bookmarks
-  # GET /bookmarks.json
+  before_action :set_bookmark, only: [:edit, :update, :destroy]
+
   def index
-    @bookmarks = Bookmark.all
+    @bookmarks = Bookmark.find(:all, :order=>"created_at DESC")
+    @bookmark = Bookmark.new
   end
 
-  # GET /bookmarks/1
-  # GET /bookmarks/1.json
-  def show
-  end
-
-  # GET /bookmarks/new
   def new
     @bookmark = Bookmark.new
   end
 
-  # GET /bookmarks/1/edit
+  def create
+    url = bookmark_params[:url]
+    json = purse_html(url)
+
+    if !json.empty?
+      title = json[:title]
+
+      @bookmark = Bookmark.new(:title => title, :url=> url)
+      @bookmark.save
+    end
+
+    redirect_to bookmarks_path
+
+  end
+
   def edit
   end
 
-  # POST /bookmarks
-  # POST /bookmarks.json
-  def create
-    @bookmark = Bookmark.new(bookmark_params)
-
-    respond_to do |format|
-      if @bookmark.save
-        format.html { redirect_to @bookmark, notice: 'Bookmark was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @bookmark }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @bookmark.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PATCH/PUT /bookmarks/1
-  # PATCH/PUT /bookmarks/1.json
   def update
-    respond_to do |format|
-      if @bookmark.update(bookmark_params)
-        format.html { redirect_to @bookmark, notice: 'Bookmark was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @bookmark.errors, status: :unprocessable_entity }
-      end
+    if @bookmark.update(bookmark_params)
+      redirect_to bookmarks_path
+    else
+      render 'edit'
     end
   end
 
-  # DELETE /bookmarks/1
-  # DELETE /bookmarks/1.json
   def destroy
     @bookmark.destroy
-    respond_to do |format|
-      format.html { redirect_to bookmarks_url }
-      format.json { head :no_content }
-    end
+    redirect_to bookmarks_path
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+    def bookmark_params
+      params[:bookmark].permit(:url)
+    end
+
     def set_bookmark
       @bookmark = Bookmark.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def bookmark_params
-      params.require(:bookmark).permit(:title, :url, :like)
+    # htmlをパースする
+    def purse_html(url)
+      json = {}
+      begin
+        if url =~ /http[s]?\:\/\/[\w\+\$\;\?\.\%\,\!\#\~\*\/\:\@\&\\\=\_\-]+/
+          res = open(url,"r",{:ssl_verify_mode=>OpenSSL::SSL::VERIFY_NONE})
+          doc = Nokogiri::HTML(res, nil, 'utf-8')
+          json[:title] = doc.search('title').first.inner_text  if doc.search('title')
+          json[:description] = doc.search('meta[@name="description"]').first.attribute("content").to_s if doc.search('meta[@name="description"]').first
+          # invalid byte sequence in UTF-8というエラーが出る場合は下記を追加すると対応できます
+          # str.encode("UTF-8", "UTF-8", invalid: :replace, undef: :replace, replace: '')
+        else
+          raise "不明なプロトコルなため処理を中断"
+        end
+      rescue Exception => e
+        logger.error "error-message:" + e.message
+      end
+      json
     end
+
+
 end

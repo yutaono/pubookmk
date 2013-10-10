@@ -1,31 +1,24 @@
-<h1>Listing bookmarks</h1>
+<h1>pubookmk</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Url</th>
-      <th>Like</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
+<%= render 'form' %>
 
-  <tbody>
-    <% @bookmarks.each do |bookmark| %>
-      <tr>
-        <td><%= bookmark.title %></td>
-        <td><%= bookmark.url %></td>
-        <td><%= bookmark.like %></td>
-        <td><%= link_to 'Show', bookmark %></td>
-        <td><%= link_to 'Edit', edit_bookmark_path(bookmark) %></td>
-        <td><%= link_to 'Destroy', bookmark, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Bookmark', new_bookmark_path %>
+<div id="bookmarkGrid">
+  <% @bookmarks.each do |bookmark| %>
+  <div style="background: url(http://api.snapito.com/web/47a7f4125dbec59e35dd31b102e7c7e162ee8403/400x280?url=<%= bookmark.url %>)">
+    <div class="wrap">
+      <%= link_to bookmark.title, bookmark.url,
+                  :class=>'bookmarkLink', :target=>'_blank' %>
+    </div>
+    <div class="panelFooter">
+      <div class="url">
+        <%= link_to bookmark.url, bookmark.url, :class=>'bookmarkLink', :target=>'_blank' %>
+      </div>
+      <div class="actions">
+        <%= link_to image_tag("/assets/link.png", {:border=>'0', :alt=>'link'}), bookmark.url, :class=>'bookmarkLink', :target=>'_blank' %>
+        <!-- <%= link_to image_tag("/assets/edit.png", {:border=>'0', :alt=>'edit'}), bookmark.url, :class=>'editButton' %> -->
+        <%= link_to image_tag("/assets/trash.png", {:border=>'0', :alt=>'delete'}), bookmark_path(bookmark.id), method: :delete, data: { confirm: "delete?" }, :class=>'closeButton' %>
+      </div>
+    </div>
+  </div>
+  <% end %>
+</div>
