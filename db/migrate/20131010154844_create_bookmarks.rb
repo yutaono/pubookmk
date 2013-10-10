@@ -3,7 +3,7 @@ class CreateBookmarks < ActiveRecord::Migration
     create_table :bookmarks do |t|
       t.string :title
       t.string :url
-      t.boolean :like
+      t.boolean :like, default: false
 
       t.timestamps
     end
