@@ -76,6 +76,15 @@ div#bookmarkGrid {
     overflow: hidden;
     margin: 0 20px 20px 0;
 
+    a {
+      text-decoration: none;
+      color: #fff;
+
+      &.bookmarkLink:visited {
+        color: #fff;
+      }
+    }
+
     div.wrap {
       height: $list-height;
       width: 260px;
@@ -84,17 +93,8 @@ div#bookmarkGrid {
       background-color: rgba(30,30,30,0.6);
 
       a {
+        font-size: 20px;
         text-shadow : 1px 1px 1px #000;
-      }
-    }
-
-    a {
-      font-size: 20px;
-      text-decoration: none;
-      color: #fff !important;
-
-      &.bookmarkLink:visited {
-        color: #fff;
       }
     }
 
@@ -112,27 +112,30 @@ div#bookmarkGrid {
         display: block;
         overflow: hidden;
         height: 20px;
+        width: 280px;
         padding-bottom: 4px;
         text-align: left;
         background-color: #f39c12;
 
         a {
-          padding: 0 12px 0 12px;
+          display: block;
+          width: 280px - 24px;
+          margin: 0 12px 0 12px;
           font-size: 13px;
-          line-height: 18px;
+          line-height: 24px;
+          overflow: hidden;
         }
       }
 
       .actions {
+
         display: block;
         height: 32px;
-        line-height: 1.6em;
+        line-height: 22px;
         text-align: right;
         background-color: #2980b9;
 
         a {
-          height: 32px;
-          line-height: 22px;
           color: #ffa;
           margin-left: 8px;
           display: inline-block;
@@ -143,6 +146,7 @@ div#bookmarkGrid {
           }
 
           img {
+            margin-top: 2px;
             max-height: 20px;
             width: auto;
           }
