@@ -6,8 +6,7 @@ $ ->
 
   setTimeout "scrollTo(0,1)", 100
 
-
-  $("div#bookmarkGrid div").hover ( ->
+  $("#bookmarkGrid .panel").hover ( ->
     $(this).find(".panelFooter").css { display: "inline" }
     $(this).find(".panelFooter").animate {height: "52px"}, 400
     ), ->
@@ -35,6 +34,11 @@ $ ->
         .animate
           height: '140px',
           duration: 600
+        .hover ( ->
+            $(this).find(".panelFooter").css { display: "inline" }
+            $(this).find(".panelFooter").animate {height: "52px"}, 400
+          ), ->
+            $(this).find(".panelFooter").animate {height: "0"}, 400
 
       $("#bookmark_url").val("")
 
