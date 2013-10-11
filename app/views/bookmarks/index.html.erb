@@ -4,21 +4,21 @@
 
 <div id="bookmarkGrid">
   <% @bookmarks.each do |bookmark| %>
-  <div style="background: url(http://api.snapito.com/web/47a7f4125dbec59e35dd31b102e7c7e162ee8403/400x280?url=<%= bookmark.url %>)">
-    <div class="wrap">
-      <%= link_to bookmark.title, bookmark.url,
-                  :class=>'bookmarkLink', :target=>'_blank' %>
-    </div>
-    <div class="panelFooter">
-      <div class="url">
-        <%= link_to bookmark.url, bookmark.url, :class=>'bookmarkLink', :target=>'_blank' %>
+    <div class="panel" style="background: url(http://api.snapito.com/web/47a7f4125dbec59e35dd31b102e7c7e162ee8403/400x280?url=<%= bookmark.url %>)">
+      <div class="wrap">
+        <%= link_to bookmark.title, bookmark.url,
+                    :class=>'bookmarkLink', :target=>'_blank' %>
       </div>
-      <div class="actions">
-        <%= link_to image_tag("/assets/link.png", {:border=>'0', :alt=>'link'}), bookmark.url, :class=>'bookmarkLink', :target=>'_blank' %>
-        <!-- <%= link_to image_tag("/assets/edit.png", {:border=>'0', :alt=>'edit'}), bookmark.url, :class=>'editButton' %> -->
-        <%= link_to image_tag("/assets/trash.png", {:border=>'0', :alt=>'delete'}), bookmark_path(bookmark.id), method: :delete, data: { confirm: "delete?" }, :class=>'closeButton' %>
+      <div class="panelFooter">
+        <div class="url">
+          <%= link_to bookmark.url, bookmark.url, :class=>'bookmarkLink', :target=>'_blank' %>
+        </div>
+        <div class="actions">
+          <%= link_to image_tag("/assets/link.png", {:border=>'0', :alt=>'link'}), bookmark.url, :class=>'bookmarkLink', :target=>'_blank' %>
+          <!-- <%= link_to image_tag("/assets/edit.png", {:border=>'0', :alt=>'edit'}), bookmark.url, :class=>'editButton' %> -->
+          <%= link_to image_tag("/assets/trash.png", {:border=>'0', :alt=>'delete'}), bookmark_path(bookmark.id), method: :delete, data: { confirm: "delete?" }, :remote=>true, :class=>'deleteButton' %>
+        </div>
       </div>
     </div>
-  </div>
   <% end %>
 </div>

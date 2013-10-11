@@ -28,7 +28,6 @@ div.inputUrl {
     vertical-align: middle;
 
     input {
-      // height: 28px;
       display: inline-block;
       float: right;
 
@@ -64,25 +63,25 @@ div#bookmarkGrid {
   margin: 0 !important;
   padding: 0;
 
-  div {
+  div.panel {
     $list-height: 140px;
+
     list-style: none;
-    margin: 0 0 20px 0;
     width: 280px;
     vertical-align: top;
     height: $list-height;
     display: inline-block;
     cursor: pointer;
     position: relative;
-    // z-index: 1000;
     overflow: hidden;
-    background-color: rgba(0,0,0,0.4);
+    margin: 0 20px 20px 0;
 
     div.wrap {
       height: $list-height;
+      width: 260px;
+      padding: 10px;
       background-repeat: no-repeat;
       background-color: rgba(0,0,0,0.4);
-      padding: 10px;
     }
 
     a {
@@ -123,11 +122,9 @@ div#bookmarkGrid {
       .actions {
         display: block;
         height: 32px;
-        margin-top: -20px;
         line-height: 1.6em;
         text-align: right;
         background-color: #2980b9;
-        // z-index: 1005;
 
         a {
           height: 32px;

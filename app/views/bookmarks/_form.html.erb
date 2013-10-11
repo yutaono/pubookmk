@@ -1,5 +1,6 @@
 <div class="inputUrl">
-  <%= form_for @bookmark do |f| %>
+  <%= form_for @bookmark , remote: true do |f| %>
+  <!-- :html => {:onsubmit=>"return ajaxAddBookmark(this);"} -->
 
   <p>
     <%= f.text_field :url, :placeholder=>"url..." %>

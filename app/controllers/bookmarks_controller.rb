@@ -15,16 +15,28 @@ class BookmarksController < ApplicationController
 
   def create
     url = bookmark_params[:url]
-    json = purse_html(url)
 
-    if !json.empty?
-      title = json[:title]
+    if Bookmark.find(:first, :conditions=>{:url=>url})
+      status = 'already exist'
+      render json: {status: status}
+    else
+      json = purse_html(url)
 
-      @bookmark = Bookmark.new(:title => title, :url=> url)
-      @bookmark.save
+      if !json.empty?
+        title = json[:title]
+
+        @bookmark = Bookmark.new(:title => title, :url=> url)
+        @bookmark.save
+
+        status = 'success'
+        html = render_to_string partial: 'panel', locals: { bookmark: @bookmark }
+      else
+        @bookmark = null
+        status = 'error'
+      end
+
+      render json: {status: status, html: html}
     end
-
-    redirect_to bookmarks_path
 
   end
 
@@ -40,8 +52,13 @@ class BookmarksController < ApplicationController
   end
 
   def destroy
-    @bookmark.destroy
-    redirect_to bookmarks_path
+    if @bookmark.destroy
+      status = 'success'
+    else
+      status = 'error'
+    end
+    render json: {status: status}
+    # redirect_to bookmarks_path
   end
 
   private
