@@ -40,6 +40,20 @@ $ ->
           ), ->
             $(this).find(".panelFooter").animate {height: "0"}, 400
 
+      $(".deleteButton").on 'ajax:complete', (event,ajax,status) ->
+        res = $.parseJSON(ajax.responseText)
+        status = res.status
+
+        $thisPanel = $(this).parent().parent().parent()
+        $thisPanel.animate
+          opacity: '0.0'
+          height: '0'
+        ,
+          duration: 600
+          complete: ->
+            $(this).remove()
+
+
       $("#bookmark_url").val("")
 
   $(".deleteButton").on 'ajax:complete', (event,ajax,status) ->
