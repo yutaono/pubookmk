@@ -10,7 +10,7 @@
     <div class="actions">
       <%= link_to image_tag("/assets/link.png", {:border=>'0', :alt=>'link'}), bookmark.url, :class=>'bookmarkLink', :target=>'_blank' %>
       <!-- <%= link_to image_tag("/assets/edit.png", {:border=>'0', :alt=>'edit'}), bookmark.url, :class=>'editButton' %> -->
-      <%= link_to image_tag("/assets/twitter.png", {:border=>'0', :alt=>'edit'}), "http://twitter.com/home?status=#{bookmark.title} #{bookmark.url} via pubookmk" , :class=>'twitterButton', :target=>'_blank'%>
+      <%= link_to image_tag("/assets/twitter.png", {:border=>'0', :alt=>'edit'}), "https://mobile.twitter.com/compose/tweet?status=#{bookmark.title} #{bookmark.url} via pubookmk" , :class=>'twitterButton', :target=>'_blank'%>
       <%= link_to image_tag("/assets/trash.png", {:border=>'0', :alt=>'delete'}), bookmark_path(bookmark.id), method: :delete, data: { confirm: "delete?" }, :remote=>true, :class=>'deleteButton' %>
     </div>
   </div>
