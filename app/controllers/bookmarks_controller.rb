@@ -19,7 +19,9 @@ class BookmarksController < ApplicationController
     if Bookmark.find(:first, :conditions=>{:url=>url})
       status = 'already exist'
       render json: {status: status}
+
     else
+
       json = purse_html(url)
 
       if !json.empty?
