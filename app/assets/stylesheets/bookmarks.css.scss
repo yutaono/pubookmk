@@ -81,7 +81,11 @@ div#bookmarkGrid {
       width: 260px;
       padding: 10px;
       background-repeat: no-repeat;
-      background-color: rgba(0,0,0,0.4);
+      background-color: rgba(30,30,30,0.6);
+
+      a {
+        text-shadow : 1px 1px 1px #000;
+      }
     }
 
     a {
