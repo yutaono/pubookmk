@@ -5,7 +5,7 @@ class BookmarksController < ApplicationController
   before_action :set_bookmark, only: [:edit, :update, :destroy]
 
   def index
-    @bookmarks = Bookmark.find(:all, :order=>"created_at DESC")
+    @bookmarks = Bookmark.find(:all, :conditions=>{:del_flg=>false}, :order=>"created_at DESC")
     @bookmark = Bookmark.new
   end
 
@@ -16,10 +16,16 @@ class BookmarksController < ApplicationController
   def create
     url = bookmark_params[:url]
 
-    if Bookmark.find(:first, :conditions=>{:url=>url})
+    if Bookmark.find(:first, :conditions=>{:url=>url, :del_flg=>false})
       status = 'already exist'
       render json: {status: status}
 
+    elsif @bookmark = Bookmark.find(:first, :conditions=>{:url=>url, :del_flg=>true})
+      @bookmark.update(:del_flg=>false)
+      status = 'success'
+      html = render_to_string partial: 'panel', locals: { bookmark: @bookmark }
+
+      render json: {status: status, html: html}
     else
 
       json = purse_html(url)
@@ -54,13 +60,13 @@ class BookmarksController < ApplicationController
   end
 
   def destroy
-    if @bookmark.destroy
+    # if @bookmark.destroy
+    if @bookmark.update(:del_flg=>true)
       status = 'success'
     else
       status = 'error'
     end
     render json: {status: status}
-    # redirect_to bookmarks_path
   end
 
   private
