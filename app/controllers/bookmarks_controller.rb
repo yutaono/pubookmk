@@ -16,11 +16,10 @@ class BookmarksController < ApplicationController
   def create
     url = bookmark_params[:url]
 
-    if Bookmark.find(:first, :conditions=>{:url=>url, :del_flg=>false})
+    if Bookmark.where(url: url, del_flg: false).first
       status = 'already exist'
       render json: {status: status}
-
-    elsif @bookmark = Bookmark.find(:first, :conditions=>{:url=>url, :del_flg=>true})
+    elsif @bookmark = Bookmark.where(url: url, del_flg: true).first
       @bookmark.update(:del_flg=>false)
       status = 'success'
       html = render_to_string partial: 'panel', locals: { bookmark: @bookmark }
@@ -39,7 +38,7 @@ class BookmarksController < ApplicationController
         status = 'success'
         html = render_to_string partial: 'panel', locals: { bookmark: @bookmark }
       else
-        @bookmark = null
+        @bookmark = nil
         status = 'error'
       end
 
