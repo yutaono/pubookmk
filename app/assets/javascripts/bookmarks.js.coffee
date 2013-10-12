@@ -38,7 +38,7 @@ $ ->
         .height('0')
         .animate
           height: '140px',
-          duration: 600
+          duration: 400
       panelHover()
 
       $(".deleteButton").on 'ajax:complete', (event,ajax,status) ->
@@ -50,7 +50,7 @@ $ ->
           opacity: '0.0'
           height: '0'
         ,
-          duration: 600
+          duration: 400
           complete: ->
             $(this).remove()
 
