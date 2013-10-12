@@ -78,7 +78,7 @@ Pubookmk::Application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 
-  config.static_cache_control = "public, max-age=#{1.day}"
+  # config.static_cache_control = "public, max-age=#{1.day}"
 
   GA.tracker = "UA-44796900-1"
 
